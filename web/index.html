@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f6f4ed">
+  <title>Two Worlds · Snoopyland × Penguinland</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/game.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Two Worlds home"><span class="brand-mark">tw<span>✦</span></span><span>two worlds<small>A LITTLE DIFFERENT. BETTER TOGETHER.</small></span></a>
+    <nav class="world-switch" aria-label="World travel">
+      <button id="sun-tab" class="active" data-world="snoopy"><span>☀</span> Snoopyland</button>
+      <button id="snow-tab" data-world="penguin"><span>❄</span> Penguinland</button>
+    </nav>
+    <div class="wallet"><span class="connection" id="connection">LOCAL WORLD</span><span class="shells">◈ <b id="coins">30</b><small>shells</small></span><button class="profile-dot" id="profile" aria-label="Open your passport">M</button></div>
+  </header>
+
+  <main class="app">
+    <section class="page-title"><div><div class="eyebrow">A SUNNY HELLO, A SNOWY ADVENTURE</div><h1>Your world. <em>A little wider.</em></h1></div><p>Gather a little. Make something.<br>Meet on the other side.</p></section>
+    <div class="game-layout">
+      <section class="map-card" aria-label="World map">
+        <div class="map-top"><div><span class="live-dot"></span><span id="world-label">SUNSHINE HARBOR</span><span class="map-season">a good day to wander</span></div><button class="icon-btn" id="help-button" aria-label="Show controls">?</button></div>
+        <div class="canvas-wrap" id="canvas-wrap">
+          <canvas id="world" width="1200" height="760" tabindex="0" aria-label="Interactive world. Click to walk, use WASD or arrow keys, E to interact. Quick routes below provide button alternatives."></canvas>
+          <div class="map-caption"><span class="region-pill" id="region-pill">☀ SUNSHINE HARBOR</span><h2 id="map-name">Snoopyland</h2><p id="map-description">Where every path leads to a little possibility.</p></div>
+          <div class="location-note" id="location-note">✦ Your next adventure is one small step away.</div>
+          <button id="interact" class="interact" hidden><kbd>E</kbd><span>Interact</span></button>
+          <div class="map-hint"><span>CLICK TO WANDER</span><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move · <kbd>E</kbd> interact</span></div>
+        </div>
+        <div class="route-bar"><span>TAKE ME TO</span><div id="routes"></div></div>
+      </section>
+
+      <aside class="sidebar">
+        <section class="passport"><div class="passport-top"><span class="eyebrow">YOUR LITTLE PASSPORT</span><span id="level">LEVEL 1</span></div><div class="passport-person"><div class="passport-avatar" id="avatar-icon">🐶</div><div><h3 id="player-name">New neighbor</h3><p id="player-title">Collector of little moments</p></div><span class="passport-star">✧</span></div><div class="xp-row"><span id="xp-text">0 / 60 XP</span><span id="stamp-count">0 stamps</span></div><div class="progress"><i id="xp-progress"></i></div></section>
+        <section class="adventure-card"><div class="section-head"><h3>A little field guide</h3><span>✦</span></div><p class="muted small">Big things start with small discoveries.</p><div id="quest-preview"></div><button id="all-quests" class="text-button">Open the field guide <span>↗</span></button></section>
+        <section class="project-preview"><div class="project-icon">🏮</div><div class="eyebrow">MADE BY ALL OF US</div><h3>The Lantern Festival</h3><p>Sunshine supplies. Snowy sparkle.<br>A celebration that needs both.</p><div class="progress"><i id="project-progress"></i></div><div class="project-count"><b id="project-total">0 / 20</b><span>neighbor parcels</span></div><button id="project-button" class="outline-button">See the shared project <span>↗</span></button></section>
+      </aside>
+    </div>
+
+    <footer class="game-footer"><div class="toolbar" aria-label="Player tools"><button data-panel="backpack"><span>▧</span> Backpack <b id="bag-count">4</b></button><button data-panel="friends"><span>♧</span> Neighbors</button><button data-panel="help"><span>✦</span> Field guide</button></div><span class="saved" id="saved">● Progress saves automatically</span></footer>
+    <section class="world-note"><span>✳</span><p><b>Two places. One neighborhood.</b> Take the sky ferry, trade little treasures, and build something neither town could make alone.</p><span class="note-number">01 — ∞</span></section>
+  </main>
+
+  <dialog id="join-dialog" class="join-dialog"><div class="join-art"><div class="orb sun-orb">☀</div><div class="join-creatures">🐶 <span>✦</span> 🐧</div><div class="join-art-caption">A FRIEND ON THE OTHER SIDE.</div></div><form id="join-form"><div class="eyebrow">WELCOME TO TWO WORLDS</div><h2>A little world.<br><em>A lot to discover.</em></h2><p>Sunny paws or snowy flippers? There’s a place for you in both towns.</p><label for="nickname">Your nickname <small>Use a made-up name.</small></label><input id="nickname" name="nickname" value="Maple" minlength="2" maxlength="16" autocomplete="off" required><fieldset><legend>Pick your neighbor</legend><label class="species"><input type="radio" name="species" value="dog" checked><span>🐶 Sunny pup</span></label><label class="species"><input type="radio" name="species" value="penguin"><span>🐧 Snowy pal</span></label></fieldset><p id="join-error" class="error" role="alert"></p><button class="primary-button" type="submit">Let’s wander <span>↗</span></button><small class="join-footnote">No sign-up. No hurry. Just a little adventure.<br>Your progress stays in this browser’s local-world session.</small></form></dialog>
+
+  <dialog id="panel-dialog" class="panel-dialog"><div class="panel-heading"><div><div class="eyebrow" id="panel-eyebrow">MAKE A LITTLE MAGIC</div><h2 id="panel-title">Backpack</h2></div><button class="close-button" id="close-panel" aria-label="Close panel">×</button></div><div id="panel-body"></div></dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
